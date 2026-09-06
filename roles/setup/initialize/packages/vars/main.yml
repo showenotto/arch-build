@@ -1,6 +1,7 @@
 ---
 PACKAGES:
   [
+    "noctalia",
     "zsh",
     "zsh-autosuggestions",
     "vim",
@@ -10,6 +11,5 @@ PACKAGES:
     "gparted",
     "btop",
     "kalk",
-    "python-pipx",
     "flatpak",
   ]

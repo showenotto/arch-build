@@ -1,5 +1,5 @@
 ---
-- name: Installing Applications [DEB]...
+- name: Installing Applications [Native]...
   pacman:
     name: "{{ item }}"
     state: latest

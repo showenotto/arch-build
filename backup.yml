@@ -3,11 +3,12 @@
   hosts: localhost
   roles:
     #Configurations
-    - roles/backup/configurations/kde-desktop
+    - roles/backup/configurations/hyprland
+    - roles/backup/configurations/noctalia
     - roles/backup/configurations/tmux
     - roles/backup/configurations/zsh
     - roles/backup/configurations/vim
-    - roles/backup/configurations/timeshift
+    #- roles/backup/configurations/timeshift
     #Applications
     - roles/backup/applications/zed
     - roles/backup/applications/wireshark

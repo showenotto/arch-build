@@ -1,9 +1,0 @@
----
-- name: Backing up kde-desktop configuration...
-  become: true
-  become_user: "{{target_user}}"
-  become_method: su
-  shell: |
-    rm -rf "{{target_home_dir}}/arch-build/roles/setup/configurations/kde-desktop/files/kde-desktop.knsv"
-    ~/.local/bin/konsave -s kde-desktop --force
-    ~/.local/bin/konsave -e kde-desktop -d "{{target_home_dir}}/arch-build/roles/setup/configurations/kde-desktop/files/"

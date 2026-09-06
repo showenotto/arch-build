@@ -1,4 +1,4 @@
-prompt_symbol=㉿
+prompt_symbol=@
 interface_name="lo"
 interface=$(ip addr show dev $interface_name up | grep -o '^[0-9]*:[[:space:]][a-z0-9_]*:' |awk -F: '{print $2}' | sed s/\ //g)
 ip=$(ip addr show dev $interface up | grep -o 'inet [0-9.]*' |awk '{print $2}')

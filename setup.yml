@@ -6,14 +6,14 @@
     - roles/setup/initialize/packages
     #Configurations
     - roles/setup/configurations/hyprland
-    - roles/setup/configurations/noctalia-desktop
+    - roles/setup/configurations/noctalia
     - roles/setup/configurations/motd
     - roles/setup/configurations/tmux
     - roles/setup/configurations/vim
     - roles/setup/configurations/zsh
     #- roles/setup/configurations/timeshift
     #Applications
-    - roles/setup/applications/install-deb
+    - roles/setup/applications/install-native
     - roles/setup/applications/install-flatpaks
     - roles/setup/applications/zed
     - roles/setup/applications/wireshark
