@@ -46,8 +46,12 @@ widget_order = [ "lockscreen-login-box@Virtual-1" ]
         show_unlock_hint = true
         show_weather = true
 
+[shell]
+font_family = "Roboto"
+
 [theme]
 builtin = "Eldritch"
+community_palette = "Oxocarbon"
 mode = "dark"
 source = "builtin"
 wallpaper_scheme = "m3-content"

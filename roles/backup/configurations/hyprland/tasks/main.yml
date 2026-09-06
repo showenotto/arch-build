@@ -6,7 +6,7 @@
   become_user: "{{target_user}}"
   become_method: su
   copy:
-    src: "{{target_home_dir}}/.config/hyprland/hyprland.lua"
+    src: "{{target_home_dir}}/.config/hypr/hyprland.lua"
     dest: "{{target_home_dir}}/arch-build/roles/setup/configurations/hyprland/files/hyprland.lua"
 
 - name:
@@ -14,5 +14,5 @@
   become_user: "{{target_user}}"
   become_method: su
   copy:
-    src: "{{target_home_dir}}/.config/hyprland/modules/keybindings.lua"
+    src: "{{target_home_dir}}/.config/hypr/modules/keybindings.lua"
     dest: "{{target_home_dir}}/arch-build/roles/setup/configurations/hyprland/files/modules/keybindings.lua"
