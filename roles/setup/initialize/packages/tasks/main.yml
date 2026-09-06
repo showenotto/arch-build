@@ -1,0 +1,15 @@
+---
+- include_vars: vars/main.yml
+- name: Initializing packages...
+  pacman:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ PACKAGES }}"
+
+- name: Installing konsave...
+  become: yes
+  become_user: "{{target_user}}"
+  become_method: su
+  shell: |
+    /usr/bin/pipx uninstall konsave
+    /usr/bin/pipx install konsave

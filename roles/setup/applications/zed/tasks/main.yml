@@ -1,0 +1,20 @@
+---
+# tasks file for zed
+- name: Configuring zed...
+  file:
+    path: "{{target_home_dir}}/.var/app/{{APP_ID}}/config/zed/"
+    state: absent
+- name:
+  become: true
+  become_user: "{{target_user}}"
+  become_method: su
+  file:
+    path: "{{target_home_dir}}/.var/app/{{APP_ID}}/config/zed/"
+    state: directory
+- name:
+  become: true
+  become_user: "{{target_user}}"
+  become_method: su
+  unarchive:
+    src: "{{target_home_dir}}/arch-build/roles/setup/applications/zed/files/zed.tar.xz"
+    dest: "{{target_home_dir}}/.var/app/{{APP_ID}}/config/"

@@ -1,0 +1,2 @@
+---
+APPLICATIONS: ["docker", "docker-compose", "wireshark-qt", "wireshark-cli"]

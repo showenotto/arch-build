@@ -1,0 +1,7 @@
+---
+- name: Backing up zed...
+  archive:
+    path: "{{target_home_dir}}/.var/app/{{ APP_ID }}/config/zed"
+    dest: "{{target_home_dir}}/arch-build/roles/setup/applications/zed/files/zed.tar.xz"
+    format: xz
+  register: config_archive_result

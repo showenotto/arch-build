@@ -1,0 +1,23 @@
+---
+- name: Configuring wireshark...
+  file:
+    #path: "{{target_home_dir}}/.var/app/{{APP_ID}}/config/wireshark/"
+    path: "{{target_home_dir}}/.config/wireshark/"
+    state: absent
+
+- name:
+  become: true
+  become_user: "{{target_user}}"
+  become_method: su
+  file:
+    #path: "{{target_home_dir}}/.var/app/{{APP_ID}}/config/wireshark/"
+    path: "{{target_home_dir}}/.config/wireshark/"
+    state: directory
+- name:
+  become: true
+  become_user: "{{target_user}}"
+  become_method: su
+  unarchive:
+    src: "{{target_home_dir}}/arch-build/roles/setup/applications/wireshark/files/wireshark.tar.xz"
+    #dest: "{{target_home_dir}}/.var/app/{{APP_ID}}/config/"
+    dest: "{{target_home_dir}}/.config/"

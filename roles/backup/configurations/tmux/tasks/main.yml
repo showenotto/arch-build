@@ -1,0 +1,5 @@
+---
+- name: Backing up tmux configuration...
+  copy:
+    src: /etc/tmux.conf
+    dest: "{{target_home_dir}}/arch-build/roles/setup/configurations/tmux/files/"

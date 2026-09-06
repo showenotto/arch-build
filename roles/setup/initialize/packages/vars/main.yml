@@ -1,0 +1,15 @@
+---
+PACKAGES:
+  [
+    "zsh",
+    "zsh-autosuggestions",
+    "vim",
+    "tmux",
+    "tree",
+    "xclip",
+    "gparted",
+    "btop",
+    "kalk",
+    "python-pipx",
+    "flatpak",
+  ]

@@ -1,0 +1,6 @@
+---
+  - name: Configuring tmux...
+    copy:
+      src: "{{target_home_dir}}/arch-build/roles/setup/configurations/tmux/files/tmux.conf"
+      dest: /etc/tmux.conf
+    become: true

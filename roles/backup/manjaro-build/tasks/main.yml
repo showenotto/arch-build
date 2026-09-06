@@ -1,0 +1,19 @@
+---
+- name: Backing up 'arch-build' to GitHub...
+  git_config:
+    name: user.email
+    value: "showenotto@proton.me"
+    scope: global
+- name:
+  git_config:
+    name: user.name
+    value: "Showen"
+    scope: global
+
+- name:
+  become: true
+  become_user: "{{target_user}}"
+  become_method: su
+  shell: git add . && git commit -m '1.0' && git push
+  args:
+    chdir: "{{target_home_dir}}/arch-build/"

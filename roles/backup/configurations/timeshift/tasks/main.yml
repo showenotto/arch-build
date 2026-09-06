@@ -1,0 +1,5 @@
+---
+- name: Backing up timeshift configuration...
+  copy:
+    src: /etc/timeshift/timeshift.json
+    dest: "{{target_home_dir}}/arch-build/roles/setup/configurations/timeshift/files/"

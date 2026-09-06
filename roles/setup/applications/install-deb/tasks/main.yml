@@ -1,0 +1,6 @@
+---
+- name: Installing Applications [DEB]...
+  pacman:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ APPLICATIONS }}"

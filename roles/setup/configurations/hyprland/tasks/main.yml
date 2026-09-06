@@ -1,0 +1,16 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for hyprland
+- name: Configuring hyprland...
+  become: true
+  become_user: "{{target_user}}"
+  become_method: su
+  file:
+    path: "{{target_home_dir}}/.config/hyprland/modules"
+    state: directory
+
+- name:
+  copy:
+    src: "{{target_home_dir}}/arch-build/roles/setup/configurations/hyprland/files/modules/keybindings.lua"
+    dest: "{{target_home_dir}}/.config/hyprland/modules/"
+  become: true

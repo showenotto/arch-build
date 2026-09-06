@@ -1,0 +1,6 @@
+---
+  - name: Configuring motd...
+    copy:
+      src: "{{ target_home_dir }}/arch-build/roles/setup/configurations/motd/files/motd"
+      dest: /etc/motd
+    become: true

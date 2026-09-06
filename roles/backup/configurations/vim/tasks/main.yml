@@ -1,0 +1,5 @@
+---
+- name: Backing up vim configuraton...
+  copy:
+    src: "{{target_home_dir}}/.vimrc"
+    dest: "{{target_home_dir}}/arch-build/roles/setup/configurations/vim/files/"

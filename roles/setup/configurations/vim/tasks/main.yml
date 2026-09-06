@@ -1,0 +1,6 @@
+---
+  - name: Configuring vim...
+    copy:
+        src: "{{target_home_dir}}/arch-build/roles/setup/configurations/vim/files/.vimrc"
+        dest: /home/showen/.vimrc
+    become: true

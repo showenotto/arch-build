@@ -1,0 +1,4 @@
+---
+- name: Backing up wireshark...
+  #shell: 'tar -C "{{target_home_dir}}/.var/app/{{APP_ID}}/config/" -cJvf "{{target_home_dir}}/arch-build/roles/setup/applications/wireshark/files/wireshark.tar.xz" wireshark/'
+  shell: 'tar -C "{{target_home_dir}}/.config/" -cJvf "{{target_home_dir}}/arch-build/roles/setup/applications/wireshark/files/wireshark.tar.xz" wireshark/'
