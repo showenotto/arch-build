@@ -1,4 +1,4 @@
-config_version = 13
+config_version = 14
 
 [control_center]
 hidden_tabs = [ "power", "bluetooth" ]
@@ -57,10 +57,10 @@ source = "builtin"
 wallpaper_scheme = "muted"
 
 [wallpaper.default]
-path = "/home/showen/Pictures/Wallpapers/images.jpg"
+path = "/home/showen/Pictures/Wallpapers/2917197433_preview_1086796.jpg"
 
 [wallpaper.last]
-path = "/home/showen/Pictures/Wallpapers/images.jpg"
+path = "/home/showen/Pictures/Wallpapers/2917197433_preview_1086796.jpg"
 
 [wallpaper.monitors.Virtual-1]
-path = "/home/showen/Pictures/Wallpapers/images.jpg"
+path = "/home/showen/Pictures/Wallpapers/2917197433_preview_1086796.jpg"
