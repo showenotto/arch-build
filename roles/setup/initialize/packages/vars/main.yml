@@ -1,6 +1,7 @@
 ---
 PACKAGES:
   [
+    "foot",
     "noctalia",
     "zsh",
     "zsh-autosuggestions",
