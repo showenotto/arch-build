@@ -54,10 +54,13 @@ builtin = "Eldritch"
 community_palette = "Oxocarbon"
 mode = "dark"
 source = "builtin"
-wallpaper_scheme = "m3-content"
+wallpaper_scheme = "muted"
 
 [wallpaper.default]
-path = "/usr/share/noctalia/assets/noctalia-wallpaper.png"
+path = "/home/showen/Pictures/Wallpapers/images.jpg"
 
 [wallpaper.last]
-path = "/usr/share/noctalia/assets/noctalia-wallpaper.png"
+path = "/home/showen/Pictures/Wallpapers/images.jpg"
+
+[wallpaper.monitors.Virtual-1]
+path = "/home/showen/Pictures/Wallpapers/images.jpg"

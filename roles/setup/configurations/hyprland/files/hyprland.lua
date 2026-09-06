@@ -256,3 +256,70 @@ hl.device({
 ---- KEYBINDINGS ----
 ---------------------
 require ("modules/keybindings")
+
+
+--------------------------------
+---- PERSISTENT WORKSPACES -----
+--------------------------------
+hl.workspace_rule({
+    workspace   = "1",
+    persistent  = true,
+    default_name = "Home",
+    default     = true,          -- starts on this workspace
+})
+
+hl.workspace_rule({
+    workspace   = "2",
+    persistent  = true,
+    default_name = "Productivity",
+})
+
+hl.workspace_rule({
+    workspace   = "3",
+    persistent  = true,
+    default_name = "Research",
+})
+
+hl.workspace_rule({
+    workspace   = "4",
+    persistent  = true,
+    default_name = "Communication",
+})
+
+---------------------
+---- WINDOW RULES ----
+---------------------
+hl.window_rule({
+  match = { class = "foot" },
+  workspace = "1"
+})
+
+local suppressMaximizeRule = hl.window_rule({
+    -- Ignore maximize requests from all apps. You'll probably like this.
+    name  = "suppress-maximize-events",
+    match = { class = ".*" },
+
+    suppress_event = "maximize",
+})
+
+hl.window_rule({
+    -- Fix some dragging issues with XWayland
+    name  = "fix-xwayland-drags",
+    match = {
+        class      = "^$",
+        title      = "^$",
+        xwayland   = true,
+        float      = true,
+        fullscreen = false,
+        pin        = false,
+    },
+no_focus = true,
+})
+
+hl.window_rule({
+    name  = "move-hyprland-run",
+    match = { class = "hyprland-run" },
+
+    move  = "20 monitor_h-120",
+    float = true,
+})

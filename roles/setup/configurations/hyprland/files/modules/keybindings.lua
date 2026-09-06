@@ -68,36 +68,6 @@ hl.bind("CTRL + ALT + END",         hl.dsp.exec_cmd("uwsm stop || hyprctl dispat
 hl.bind("CTRL + ALT + UP",          hl.dsp.exec_cmd("systemctl reboot"))         -- Restart
 hl.bind("CTRL + ALT + DOWN",        hl.dsp.exec_cmd("systemctl poweroff"))       -- Shutdown
 
---------------------------------
----- PERSISTENT WORKSPACES -----
---------------------------------
--- Replace "DP-1" with your actual monitor name (run `hyprctl monitors`)
-
-hl.workspace_rule({
-    workspace   = "1",
-    persistent  = true,
-    default_name = "Home",
-    default     = true,          -- starts on this workspace
-})
-
-hl.workspace_rule({
-    workspace   = "2",
-    persistent  = true,
-    default_name = "Productivity",
-})
-
-hl.workspace_rule({
-    workspace   = "3",
-    persistent  = true,
-    default_name = "Research",
-})
-
-hl.workspace_rule({
-    workspace   = "4",
-    persistent  = true,
-    default_name = "Communication",
-})
-
 -- ========== Hyprland Defaults ==========
 
 -- Example special workspace (scratchpad)
@@ -125,36 +95,3 @@ hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = tr
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
-
-local suppressMaximizeRule = hl.window_rule({
-    -- Ignore maximize requests from all apps. You'll probably like this.
-    name  = "suppress-maximize-events",
-    match = { class = ".*" },
-
-    suppress_event = "maximize",
-})
--- suppressMaximizeRule:set_enabled(false)
-
-hl.window_rule({
-    -- Fix some dragging issues with XWayland
-    name  = "fix-xwayland-drags",
-    match = {
-        class      = "^$",
-        title      = "^$",
-        xwayland   = true,
-        float      = true,
-        fullscreen = false,
-        pin        = false,
-    },
-
-    no_focus = true,
-})
-
--- Hyprland-run window rule
-hl.window_rule({
-    name  = "move-hyprland-run",
-    match = { class = "hyprland-run" },
-
-    move  = "20 monitor_h-120",
-    float = true,
-})
