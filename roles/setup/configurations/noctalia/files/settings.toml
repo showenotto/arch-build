@@ -1,5 +1,8 @@
 config_version = 14
 
+[bar.default]
+smart_auto_hide = true
+
 [control_center]
 hidden_tabs = [ "power", "bluetooth" ]
 
