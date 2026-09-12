@@ -49,7 +49,7 @@ _G.menu        = "hyprlauncher"
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 --
- hl.on("hyprland.start", function () 
+ hl.on("hyprland.start", function ()
    hl.exec_cmd("noctalia")
  end)
 
@@ -289,9 +289,38 @@ hl.workspace_rule({
 ---------------------
 ---- WINDOW RULES ----
 ---------------------
+-- Home
 hl.window_rule({
   match = { class = "foot" },
   workspace = "1"
+})
+
+hl.window_rule({
+  match = { class = "org.kde.dolphin" },
+  workspace = "1"
+})
+
+-- Productivity
+hl.window_rule({
+  match = { class = "dev.zed.Zed" },
+  workspace = "2"
+})
+
+hl.window_rule({
+  match = { class = "wireshark" },
+  workspace = "2"
+})
+
+-- Research
+hl.window_rule({
+  match = { class = "brave-browser" },
+  workspace = "3"
+})
+
+-- Communications
+hl.window_rule({
+  match = { class = "discord" },
+  workspace = "4"
 })
 
 local suppressMaximizeRule = hl.window_rule({

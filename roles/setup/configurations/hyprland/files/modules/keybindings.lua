@@ -6,10 +6,10 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 -- ========== Applications ==========
 -- Adjust the commands to match your actual apps
 hl.bind(mainMod .. " + A",     hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
-hl.bind(mainMod .. " + SPACE",      hl.dsp.exec_cmd(terminal))                   
-hl.bind(mainMod .. " + B",          hl.dsp.exec_cmd("firefox"))                  
-hl.bind(mainMod .. " + E",          hl.dsp.exec_cmd("dolphin"))                   
-hl.bind(mainMod .. " + Z",          hl.dsp.exec_cmd("code"))
+hl.bind(mainMod .. " + SPACE",      hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + B",          hl.dsp.exec_cmd("com.brave.Browser"))
+hl.bind(mainMod .. " + E",          hl.dsp.exec_cmd("dolphin"))
+hl.bind(mainMod .. " + Z",          hl.dsp.exec_cmd("dev.zed.Zed"))
 
 -- ========== Window Actions ==========
 hl.bind(mainMod .. " + C",          hl.dsp.window.close())                       -- Close Window
