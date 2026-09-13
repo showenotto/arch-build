@@ -1,6 +1,0 @@
----
-- name: Configuring timeshift...
-  copy:
-    src: "{{target_home_dir}}/arch-build/roles/setup/configurations/timeshift/files/timeshift.json"
-    dest: /etc/timeshift/timeshift.json
-  become: true

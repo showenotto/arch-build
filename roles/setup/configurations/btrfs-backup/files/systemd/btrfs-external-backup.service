@@ -1,0 +1,7 @@
+[Unit]
+Description=Weekly external Btrfs backup
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/btrfs-external-backup

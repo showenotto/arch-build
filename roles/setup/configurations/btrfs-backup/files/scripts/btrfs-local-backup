@@ -1,0 +1,156 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# ============================================================
+# Btrfs weekly LOCAL snapshots
+#
+# Creates:
+#   /var/lib/btrfs-snapshots/root/<timestamp>
+#   /home/.btrfs-snapshots/<timestamp>
+#
+# Keeps the newest 8 snapshots for each filesystem.
+# ============================================================
+
+USER="showen"
+
+ROOT_SNAPSHOT_DIR="/var/lib/btrfs-snapshots/root"
+HOME_SNAPSHOT_DIR="/home/$USER/.btrfs-snapshots"
+
+RETENTION=8
+
+DATE="$(date '+%Y-%m-%d-%H%M%S')"
+
+# Prevent two copies of this script running simultaneously.
+exec 9>/run/btrfs-local-snapshots.lock
+flock -n 9 || {
+    echo "Another local snapshot job is already running."
+    exit 1
+}
+
+echo "=========================================="
+echo "Btrfs local snapshot job"
+echo "Started: $(date)"
+echo "=========================================="
+
+# ------------------------------------------------------------
+# Make sure snapshot directories exist
+# ------------------------------------------------------------
+
+mkdir -p "$ROOT_SNAPSHOT_DIR"
+mkdir -p "$HOME_SNAPSHOT_DIR"
+
+# ------------------------------------------------------------
+# Verify they are on Btrfs
+# ------------------------------------------------------------
+
+ROOT_FS="$(findmnt -T / -n -o FSTYPE)"
+HOME_FS="$(findmnt -T /home -n -o FSTYPE)"
+
+if [[ "$ROOT_FS" != "btrfs" ]]; then
+    echo "ERROR: / is not mounted as Btrfs."
+    exit 1
+fi
+
+if [[ "$HOME_FS" != "btrfs" ]]; then
+    echo "ERROR: /home is not mounted as Btrfs."
+    exit 1
+fi
+
+# ------------------------------------------------------------
+# Create ROOT snapshot
+# ------------------------------------------------------------
+
+ROOT_SNAPSHOT="$ROOT_SNAPSHOT_DIR/$DATE"
+
+echo
+echo "Creating root snapshot:"
+echo "  $ROOT_SNAPSHOT"
+
+if [[ -e "$ROOT_SNAPSHOT" ]]; then
+    echo "ERROR: Snapshot already exists."
+    exit 1
+fi
+
+btrfs subvolume snapshot -r / "$ROOT_SNAPSHOT"
+
+echo "Root snapshot created."
+
+# ------------------------------------------------------------
+# Create HOME snapshot
+# ------------------------------------------------------------
+
+HOME_SNAPSHOT="$HOME_SNAPSHOT_DIR/$DATE"
+
+echo
+echo "Creating home snapshot:"
+echo "  $HOME_SNAPSHOT"
+
+if [[ -e "$HOME_SNAPSHOT" ]]; then
+    echo "ERROR: Snapshot already exists."
+    exit 1
+fi
+
+btrfs subvolume snapshot -r /home "$HOME_SNAPSHOT"
+
+echo "Home snapshot created."
+
+# ------------------------------------------------------------
+# Retention function
+# ------------------------------------------------------------
+
+retain_snapshots()
+{
+    local SNAPSHOT_DIR="$1"
+
+    echo
+    echo "Checking retention:"
+    echo "  $SNAPSHOT_DIR"
+
+    mapfile -t SNAPSHOTS < <(
+        find "$SNAPSHOT_DIR" \
+            -mindepth 1 \
+            -maxdepth 1 \
+            -type d \
+            -printf '%f\n' |
+        sort
+    )
+
+    local COUNT="${#SNAPSHOTS[@]}"
+
+    echo "  Found $COUNT snapshots."
+
+    while (( COUNT > RETENTION )); do
+
+        OLDEST="${SNAPSHOTS[0]}"
+        OLDEST_PATH="$SNAPSHOT_DIR/$OLDEST"
+
+        echo "  Deleting oldest snapshot:"
+        echo "    $OLDEST_PATH"
+
+        if btrfs subvolume show "$OLDEST_PATH" >/dev/null 2>&1; then
+            btrfs subvolume delete "$OLDEST_PATH"
+        else
+            echo "  WARNING: $OLDEST_PATH is not a Btrfs subvolume."
+            echo "  Skipping it."
+        fi
+
+        SNAPSHOTS=("${SNAPSHOTS[@]:1}")
+        ((COUNT--))
+    done
+
+    echo "  Retention complete: $COUNT snapshots retained."
+}
+
+# ------------------------------------------------------------
+# Apply retention
+# ------------------------------------------------------------
+
+retain_snapshots "$ROOT_SNAPSHOT_DIR"
+retain_snapshots "$HOME_SNAPSHOT_DIR"
+
+echo
+echo "=========================================="
+echo "Local snapshot job completed successfully."
+echo "Finished: $(date)"
+echo "=========================================="

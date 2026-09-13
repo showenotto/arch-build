@@ -1,0 +1,250 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# ============================================================
+# Btrfs weekly EXTERNAL backup
+#
+# Sends the newest LOCAL snapshot as a FULL btrfs send.
+#
+# External storage keeps:
+#
+#   /mnt/btrfs-backup/root/root-backup
+#   /mnt/btrfs-backup/home/home-backup
+#
+# The old backup is kept until the new full transfer
+# successfully completes.
+# ============================================================
+USER="showen"
+BACKUP_MOUNT="/mnt/btrfs-backup"
+
+ROOT_SNAPSHOT_DIR="/var/lib/btrfs-snapshots/root"
+HOME_SNAPSHOT_DIR="/home/$USER/.btrfs-snapshots"
+
+ROOT_BACKUP_DIR="$BACKUP_MOUNT/root"
+HOME_BACKUP_DIR="$BACKUP_MOUNT/home"
+
+ROOT_FINAL="$ROOT_BACKUP_DIR/root-backup"
+HOME_FINAL="$HOME_BACKUP_DIR/home-backup"
+
+# ------------------------------------------------------------
+# Prevent simultaneous executions
+# ------------------------------------------------------------
+
+exec 9>/run/btrfs-external-backup.lock
+flock -n 9 || {
+    echo "Another external backup job is already running."
+    exit 1
+}
+
+echo "=========================================="
+echo "Btrfs external backup job"
+echo "Started: $(date)"
+echo "=========================================="
+
+# ------------------------------------------------------------
+# Check whether external HDD is mounted
+# ------------------------------------------------------------
+
+if ! mountpoint -q "$BACKUP_MOUNT"; then
+    echo
+    echo "External Btrfs drive is not mounted."
+    echo "Skipping external backup."
+    echo
+    echo "Local snapshots are unaffected."
+    exit 0
+fi
+
+# ------------------------------------------------------------
+# Make sure external filesystem is Btrfs
+# ------------------------------------------------------------
+
+BACKUP_FS="$(findmnt -M "$BACKUP_MOUNT" -n -o FSTYPE)"
+
+if [[ "$BACKUP_FS" != "btrfs" ]]; then
+    echo "ERROR: $BACKUP_MOUNT is not a Btrfs filesystem."
+    exit 1
+fi
+
+echo "External Btrfs filesystem detected."
+
+# ------------------------------------------------------------
+# Create backup directories
+# ------------------------------------------------------------
+
+mkdir -p "$ROOT_BACKUP_DIR"
+mkdir -p "$HOME_BACKUP_DIR"
+
+# ------------------------------------------------------------
+# Find newest local snapshot
+# ------------------------------------------------------------
+
+newest_snapshot()
+{
+    local SNAPSHOT_DIR="$1"
+
+    find "$SNAPSHOT_DIR" \
+        -mindepth 1 \
+        -maxdepth 1 \
+        -type d \
+        -printf '%T@ %p\n' |
+    sort -n |
+    tail -n 1 |
+    cut -d' ' -f2-
+}
+
+# ------------------------------------------------------------
+# Full backup function
+# ------------------------------------------------------------
+
+backup_snapshot()
+{
+    local SOURCE_DIR="$1"
+    local DEST_DIR="$2"
+    local FINAL_NAME="$3"
+
+    local SOURCE
+    local SNAPSHOT_NAME
+    local RECEIVED
+    local OLD
+
+    SOURCE="$(newest_snapshot "$SOURCE_DIR")"
+
+    if [[ -z "$SOURCE" ]]; then
+        echo
+        echo "ERROR: No snapshots found in:"
+        echo "  $SOURCE_DIR"
+        return 1
+    fi
+
+    SNAPSHOT_NAME="$(basename "$SOURCE")"
+    RECEIVED="$DEST_DIR/$SNAPSHOT_NAME"
+    FINAL="$DEST_DIR/$FINAL_NAME"
+    OLD="$DEST_DIR/${FINAL_NAME}.old"
+
+    echo
+    echo "------------------------------------------"
+    echo "Backing up:"
+    echo "  $SOURCE"
+    echo
+    echo "Destination:"
+    echo "  $FINAL"
+    echo "------------------------------------------"
+
+    # --------------------------------------------------------
+    # Clean up an old temporary received snapshot
+    # --------------------------------------------------------
+
+    if [[ -e "$RECEIVED" ]]; then
+        echo "Removing stale temporary received snapshot:"
+        echo "  $RECEIVED"
+
+        if btrfs subvolume show "$RECEIVED" >/dev/null 2>&1; then
+            btrfs subvolume delete "$RECEIVED"
+        else
+            echo "ERROR: Existing destination is not a Btrfs subvolume."
+            return 1
+        fi
+    fi
+
+    # --------------------------------------------------------
+    # Receive the NEW full backup
+    #
+    # IMPORTANT:
+    # The old backup is NOT touched yet.
+    # --------------------------------------------------------
+
+    echo
+    echo "Sending full Btrfs snapshot..."
+    echo "This may take some time."
+
+    btrfs send "$SOURCE" | btrfs receive "$DEST_DIR"
+
+    echo
+    echo "Full transfer completed successfully."
+
+    # --------------------------------------------------------
+    # Remove previous .old if one exists
+    # --------------------------------------------------------
+
+    if [[ -e "$OLD" ]]; then
+        echo "Removing previous temporary old backup."
+
+        if btrfs subvolume show "$OLD" >/dev/null 2>&1; then
+            btrfs subvolume delete "$OLD"
+        else
+            echo "ERROR: $OLD exists but is not a Btrfs subvolume."
+            return 1
+        fi
+    fi
+
+    # --------------------------------------------------------
+    # Move existing final backup out of the way
+    # --------------------------------------------------------
+
+    if [[ -e "$FINAL" ]]; then
+        echo "Moving existing backup aside:"
+        echo "  $FINAL -> $OLD"
+
+        mv "$FINAL" "$OLD"
+    fi
+
+    # --------------------------------------------------------
+    # Rename newly received snapshot
+    # --------------------------------------------------------
+
+    echo "Installing new backup:"
+    echo "  $RECEIVED -> $FINAL"
+
+    if ! mv "$RECEIVED" "$FINAL"; then
+
+        echo
+        echo "ERROR: Could not rename new backup."
+
+        # Try to restore previous backup name.
+        if [[ -e "$OLD" && ! -e "$FINAL" ]]; then
+            echo "Restoring previous backup."
+            mv "$OLD" "$FINAL"
+        fi
+
+        return 1
+    fi
+
+    # --------------------------------------------------------
+    # Delete previous backup
+    # --------------------------------------------------------
+
+    if [[ -e "$OLD" ]]; then
+        echo "Deleting previous backup."
+
+        btrfs subvolume delete "$OLD"
+    fi
+
+    echo
+    echo "Backup successfully installed:"
+    echo "  $FINAL"
+}
+
+# ------------------------------------------------------------
+# ROOT
+# ------------------------------------------------------------
+
+backup_snapshot \
+    "$ROOT_SNAPSHOT_DIR" \
+    "$ROOT_BACKUP_DIR" \
+    "root-backup"
+
+# ------------------------------------------------------------
+# HOME
+# ------------------------------------------------------------
+
+backup_snapshot \
+    "$HOME_SNAPSHOT_DIR" \
+    "$HOME_BACKUP_DIR" \
+    "home-backup"
+
+echo
+echo "=========================================="
+echo "External backup completed successfully."
+echo "Finished: $(date)"
+echo "=========================================="

@@ -1,0 +1,44 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for btrfs-backup
+
+- name: Configuring custom btrfs-backup...
+  become: true
+  become_method: su
+  ansible.builtin.copy:
+    src: "{{ target_home_dir }}/arch-build/roles/setup/configurations/btrfs-backup/files/scripts/{{ item }}"
+    dest: "/usr/local/sbin/"
+  loop:
+    - btrfs-local-backup
+    - btrfs-external-backup
+
+- name:
+  become: true
+  become_method: su
+  ansible.builtin.copy:
+    src: "{{ target_home_dir }}/arch-build/roles/setup/configurations/btrfs-backup/files/systemd/{{ item }}"
+    dest: "/etc/systemd/system/"
+  loop:
+    - btrfs-local-backup.service
+    - btrfs-local-backup.timer
+    - btrfs-external-backup.service
+    - btrfs-external-backup.timer
+
+- name:
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name:
+  become: true
+  ansible.builtin.systemd:
+    name: btrfs-local-backup.timer
+    enabled: true
+    state: started
+
+- name:
+  become: true
+  ansible.builtin.systemd:
+    name: btrfs-external-backup.timer
+    enabled: true
+    state: started
