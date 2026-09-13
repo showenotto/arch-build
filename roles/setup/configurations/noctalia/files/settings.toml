@@ -60,10 +60,10 @@ source = "builtin"
 wallpaper_scheme = "muted"
 
 [wallpaper.default]
-path = "/home/showen/Pictures/Wallpapers/2917197433_preview_1086796.jpg"
+path = "/home/showen/Pictures/Wallpapers/wallpaper.jpg"
 
 [wallpaper.last]
-path = "/home/showen/Pictures/Wallpapers/2917197433_preview_1086796.jpg"
+path = "/home/showen/Pictures/Wallpapers/wallpaper.jpg"
 
 [wallpaper.monitors.Virtual-1]
-path = "/home/showen/Pictures/Wallpapers/2917197433_preview_1086796.jpg"
+path = "/home/showen/Pictures/Wallpapers/wallpaper.jpg"
