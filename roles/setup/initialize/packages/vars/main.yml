@@ -1,16 +1,18 @@
 ---
 PACKAGES:
   [
-    "foot",
-    "noctalia",
     "zsh",
-    "zsh-autosuggestions",
     "vim",
     "tmux",
     "tree",
-    "xclip",
-    "gparted",
+    "foot",
     "btop",
     "kalk",
+    "xclip",
+    "gparted",
     "flatpak",
+    "noctalia",
+    "plasma-integration",
+    "ttf-jetbrains-mono",
+    "zsh-autosuggestions",
   ]

@@ -63,6 +63,8 @@ _G.menu        = "hyprlauncher"
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 
+--Custom
+hl.env("QT_QPA_PLATFORMTHEME", "kde")
 
 -----------------------
 ----- PERMISSIONS -----
