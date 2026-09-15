@@ -1,0 +1,25 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for misc
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for misc
+# Foot (Terminal)
+- name:
+  become: true
+  become_user: "{{target_user}}"
+  become_method: su
+  copy:
+    src: "{{target_home_dir}}/.config/foot/foot.ini"
+    dest: "{{target_home_dir}}/arch-build/roles/setup/configurations/misc/files/"
+
+# Dolphin
+- name:
+  become: true
+  become_method: su
+  copy:
+    src: "{{ target_home_dir }}/.config/{{ item }}"
+    dest: "{{ target_home_dir }}/arch-build/roles/setup/configurations/misc/files/"
+  loop:
+    - kdeglobals
+    - dolphinrc

@@ -1,2 +1,3 @@
 ---
 APPLICATIONS: ["wireshark-qt", "wireshark-cli"]
+AUR_APPLICATIONS: ["brave-bin"]

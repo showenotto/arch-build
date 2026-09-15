@@ -12,6 +12,7 @@ PACKAGES:
     "gparted",
     "flatpak",
     "noctalia",
+    "base-devel",
     "plasma-integration",
     "ttf-jetbrains-mono",
     "zsh-autosuggestions",

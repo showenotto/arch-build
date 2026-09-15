@@ -4,6 +4,7 @@
   roles:
     #Initializations
     - roles/setup/initialize/packages
+    - roles/setup/initialize/yay
     #Configurations
     - roles/setup/configurations/hyprland
     - roles/setup/configurations/noctalia

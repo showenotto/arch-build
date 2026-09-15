@@ -1,0 +1,48 @@
+---
+- name: Installing yay AUR helper...
+  ansible.builtin.file:
+    path: "{{ yay_build_dir }}"
+    state: directory
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: "0755"
+
+- name:
+  ansible.builtin.git:
+    repo: "https://aur.archlinux.org/yay.git"
+    dest: "{{ yay_build_dir }}"
+    version: master
+    force: true
+  become: false
+  become_user: "{{ target_user }}"
+
+- name:
+  ansible.builtin.command:
+    cmd: makepkg --noconfirm
+    chdir: "{{ yay_build_dir }}"
+  become: true
+  become_user: "{{ target_user }}"
+  environment:
+    GOFLAGS: "-buildvcs=false"
+
+- name:
+  ansible.builtin.find:
+    paths: "{{ yay_build_dir }}"
+    patterns:
+      - "yay-*.pkg.tar.zst"
+    file_type: file
+  register: yay_package
+  become: false
+
+- name:
+  become: true
+  ansible.builtin.command:
+    cmd: pacman -U --noconfirm {{ yay_package.files[1].path }}
+  when:
+    - yay_package.matched > 0
+
+- name:
+  ansible.builtin.file:
+    path: "{{ yay_build_dir }}"
+    state: absent
+  become: true

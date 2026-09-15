@@ -4,3 +4,69 @@
     name: "{{ item }}"
     state: latest
   loop: "{{ APPLICATIONS }}"
+
+#Applications via AUR
+- name: Installing Applications [AUR]...
+  ansible.builtin.file:
+    path: "/tmp/aur-build/{{ item }}"
+    state: directory
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: "0755"
+  loop: "{{ AUR_APPLICATIONS }}"
+  become: true
+  when: AUR_APPLICATIONS | length > 0
+
+
+- name:
+  ansible.builtin.git:
+    repo: "https://aur.archlinux.org/{{ item }}.git"
+    dest: "/tmp/aur-build/{{ item }}"
+    version: master
+    force: true
+  loop: "{{ AUR_APPLICATIONS }}"
+  become: true
+  become_user: "{{ target_user }}"
+  when: AUR_APPLICATIONS | length > 0
+
+
+- name:
+  ansible.builtin.command:
+    cmd: makepkg --noconfirm
+    chdir: "/tmp/aur-build/{{ item }}"
+  loop: "{{ AUR_APPLICATIONS }}"
+  become: true
+  become_user: "{{ target_user }}"
+  environment:
+    GOFLAGS: "-buildvcs=false"
+  when: AUR_APPLICATIONS | length > 0
+
+
+- name:
+  ansible.builtin.find:
+    paths: "/tmp/aur-build/{{ item }}"
+    patterns:
+      - "*.pkg.tar.zst"
+    file_type: file
+  loop: "{{ AUR_APPLICATIONS }}"
+  register: aur_packages
+  become: false
+  when: AUR_APPLICATIONS | length > 0
+
+
+- name:
+  become: true
+  ansible.builtin.command:
+    cmd: pacman -U --noconfirm {{ item.1.path }}
+  loop: "{{ aur_packages.results | subelements('files') }}"
+  when:
+    - AUR_APPLICATIONS | length > 0
+
+
+- name:
+  ansible.builtin.file:
+    path: "/tmp/aur-build/{{ item }}"
+    state: absent
+  loop: "{{ AUR_APPLICATIONS }}"
+  become: true
+  when: AUR_APPLICATIONS | length > 0
