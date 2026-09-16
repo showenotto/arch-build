@@ -1,7 +1,20 @@
 config_version = 14
 
 [bar.default]
+end = [
+    "tray",
+    "notifications",
+    "clipboard",
+    "network",
+    "bluetooth",
+    "volume",
+    "brightness",
+    "battery",
+    "control-center",
+    "session"
+]
 smart_auto_hide = true
+start = [ "launcher", "workspaces" ]
 
 [control_center]
 hidden_tabs = [ "power", "bluetooth" ]

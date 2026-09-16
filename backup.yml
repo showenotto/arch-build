@@ -8,6 +8,7 @@
     - roles/backup/configurations/tmux
     - roles/backup/configurations/zsh
     - roles/backup/configurations/vim
+    - roles/backup/configurations/misc
     - roles/backup/configurations/btrfs-backup
     #Applications
     - roles/backup/applications/zed
