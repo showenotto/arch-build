@@ -11,6 +11,7 @@ hl.bind(mainMod .. " + B",          hl.dsp.exec_cmd("brave"))
 hl.bind(mainMod .. " + SHIFT + B",  hl.dsp.exec_cmd("brave --incognito"))
 hl.bind(mainMod .. " + E",          hl.dsp.exec_cmd("dolphin"))
 hl.bind(mainMod .. " + Z",          hl.dsp.exec_cmd("dev.zed.Zed"))
+hl.bind(mainMod .. " + V",          hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"))
 
 -- ========== Window Actions ==========
 hl.bind(mainMod .. " + C",          hl.dsp.window.close())                       -- Close Window
