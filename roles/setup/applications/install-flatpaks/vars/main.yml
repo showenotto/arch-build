@@ -1,8 +1,6 @@
 ---
 FLATPAKS:
   [
-    "org.kde.filelight",
-    "com.github.tchx84.Flatseal",
     "dev.zed.Zed",
     "com.discordapp.Discord",
   ]

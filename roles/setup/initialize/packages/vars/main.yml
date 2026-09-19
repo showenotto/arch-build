@@ -2,6 +2,7 @@
 PACKAGES:
   [
     "go",
+    "gum",
     "zsh",
     "vim",
     "tmux",
@@ -15,6 +16,7 @@ PACKAGES:
     "xclip",
     "gparted",
     "flatpak",
+    "filelight",
     "noctalia",
     "base-devel",
     "wl-clipboard",

@@ -2,7 +2,7 @@
 ---
 # tasks file for misc
 # Foot (Terminal)
-- name:
+- name: Configuring Foot...
   become: true
   become_user: "{{target_user}}"
   become_method: su
@@ -19,7 +19,7 @@
     dest: "{{target_home_dir}}/.config/foot/foot.ini"
 
 # Dolphin
-- name:
+- name: Configuring Dolphin...
   become: true
   become_method: su
   copy:
@@ -28,3 +28,25 @@
   loop:
     - kdeglobals
     - dolphinrc
+
+# SDDM Astronaut Theme
+- name: Configuring SDDM...
+  become: true
+  become_method: su
+  file:
+    path: "/etc/sddm.conf.d/"
+    state: directory
+
+- name:
+  become: true
+  become_method: su
+  copy:
+    src: "{{ target_home_dir }}/arch-build/roles/setup/configurations/misc/files/theme.conf"
+    dest: "/etc/sddm.conf.d/"
+
+- name:
+  become: true
+  become_method: su
+  copy:
+    src: "{{ target_home_dir }}/arch-build/roles/setup/configurations/misc/files/metadata.desktop"
+    dest: "/usr/share/sddm/themes/sddm-astronaut-theme/"
