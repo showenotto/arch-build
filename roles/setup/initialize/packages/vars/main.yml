@@ -1,6 +1,7 @@
 ---
 PACKAGES:
   [
+    "go",
     "zsh",
     "vim",
     "tmux",
@@ -8,11 +9,15 @@ PACKAGES:
     "foot",
     "btop",
     "kalk",
+    "grim",
+    "slurp",
+    "satty",
     "xclip",
     "gparted",
     "flatpak",
     "noctalia",
     "base-devel",
+    "wl-clipboard",
     "plasma-integration",
     "ttf-jetbrains-mono",
     "zsh-autosuggestions",

@@ -12,6 +12,8 @@ hl.bind(mainMod .. " + SHIFT + B",  hl.dsp.exec_cmd("brave --incognito"))
 hl.bind(mainMod .. " + E",          hl.dsp.exec_cmd("dolphin"))
 hl.bind(mainMod .. " + Z",          hl.dsp.exec_cmd("dev.zed.Zed"))
 hl.bind(mainMod .. " + V",          hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"))
+hl.bind("Print",          hl.dsp.exec_cmd("grim - | satty -f -"))
+hl.bind(mainMod .. " + Print",          hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | satty -f -"))
 
 -- ========== Window Actions ==========
 hl.bind(mainMod .. " + C",          hl.dsp.window.close())                       -- Close Window
