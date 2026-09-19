@@ -5,14 +5,17 @@
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 -- ========== Applications ==========
 -- Adjust the commands to match your actual apps
-hl.bind(mainMod .. " + A",     hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
-hl.bind(mainMod .. " + SPACE",      hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + B",          hl.dsp.exec_cmd("brave"))
-hl.bind(mainMod .. " + SHIFT + B",  hl.dsp.exec_cmd("brave --incognito"))
-hl.bind(mainMod .. " + E",          hl.dsp.exec_cmd("dolphin"))
-hl.bind(mainMod .. " + Z",          hl.dsp.exec_cmd("dev.zed.Zed"))
-hl.bind(mainMod .. " + V",          hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"))
-hl.bind("Print",          hl.dsp.exec_cmd("grim - | satty -f -"))
+hl.bind(mainMod .. " + A",     			hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
+hl.bind(mainMod .. " + SPACE",      	hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + B",          	hl.dsp.exec_cmd("brave"))
+hl.bind(mainMod .. " + SHIFT + B",  	hl.dsp.exec_cmd("brave --incognito"))
+hl.bind(mainMod .. " + E",          	hl.dsp.exec_cmd("dolphin"))
+hl.bind(mainMod .. " + Z",          	hl.dsp.exec_cmd("dev.zed.Zed"))
+
+-- ========== Utilities & programmes ==========
+hl.bind(mainMod .. " + V",          	hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"))
+hl.bind(mainMod .. " + N",          	hl.dsp.exec_cmd("noctalia msg panel-toggle control-center notifications"))
+hl.bind("Print",          				hl.dsp.exec_cmd("grim - | satty -f -"))
 hl.bind(mainMod .. " + Print",          hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | satty -f -"))
 
 -- ========== Window Actions ==========
