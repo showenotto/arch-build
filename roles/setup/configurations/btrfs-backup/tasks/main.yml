@@ -8,6 +8,7 @@
   ansible.builtin.copy:
     src: "{{ target_home_dir }}/arch-build/roles/setup/configurations/btrfs-backup/files/scripts/{{ item }}"
     dest: "/usr/local/sbin/"
+    mode: '0755'
   loop:
     - btrfs-local-backup
     - btrfs-external-backup
