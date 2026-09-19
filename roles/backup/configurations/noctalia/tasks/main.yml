@@ -21,4 +21,4 @@
   become: true
   become_user: "{{target_user}}"
   become_method: su
-  command: noctalia config export full > "{{target_home_dir}}/arch-build/roles/setup/configurations/noctalia/files/noctalia-config.toml"
+  shell: noctalia config export full > "{{target_home_dir}}/arch-build/roles/setup/configurations/noctalia/files/noctalia-config.toml"
