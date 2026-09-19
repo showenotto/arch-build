@@ -1,13 +1,21 @@
 #SPDX-License-Identifier: MIT-0
 ---
-# tasks file for noctalia-desktop
+# tasks fill
 - name: Configuring noctalia...
   become: true
   become_user: "{{target_user}}"
   become_method: su
   file:
-    path: "{{target_home_dir}}/.local/state/noctalia/"
+    path: "{{target_home_dir}}/.config/noctalia/"
     state: directory
+
+- name:
+  become: true
+  become_user: "{{target_user}}"
+  become_method: su
+  copy:
+    src: "{{target_home_dir}}/arch-build/roles/setup/configurations/noctalia/files/noctalia-config.toml"
+    dest: "{{target_home_dir}}/.config/noctalia/"
 
 - name:
   become: true
@@ -24,19 +32,3 @@
   copy:
     src: "{{target_home_dir}}/arch-build/roles/setup/configurations/noctalia/files/wallpaper.jpg"
     dest: "{{target_home_dir}}/Pictures/Wallpapers/"
-
-- name:
-  become: true
-  become_user: "{{target_user}}"
-  become_method: su
-  copy:
-    src: "{{target_home_dir}}/arch-build/roles/setup/configurations/noctalia/files/settings.toml"
-    dest: "{{target_home_dir}}/.local/state/noctalia/settings.toml"
-
-- name:
-  become: true
-  become_user: "{{target_user}}"
-  become_method: su
-  copy:
-    src: "{{target_home_dir}}/arch-build/roles/setup/configurations/noctalia/files/state.toml"
-    dest: "{{target_home_dir}}/.local/state/noctalia/state.toml"

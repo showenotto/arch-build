@@ -1,18 +1,24 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for noctalia-desktop
+#- name: Backing up noctalia...
+#  become: true
+#  become_user: "{{target_user}}"
+#  become_method: su
+#  copy:
+#    src: "{{target_home_dir}}/.local/state/noctalia/settings.toml"
+#    dest: "{{target_home_dir}}/arch-build/roles/setup/configurations/noctalia/files/settings.toml"
+
+#- name:
+#  become: true
+#  become_user: "{{target_user}}"
+#  become_method: su
+#  copy:
+#    src: "{{target_home_dir}}/.local/state/noctalia/state.toml"
+#    dest: "{{target_home_dir}}/arch-build/roles/setup/configurations/noctalia/files/state.toml"
+
 - name: Backing up noctalia...
   become: true
   become_user: "{{target_user}}"
   become_method: su
-  copy:
-    src: "{{target_home_dir}}/.local/state/noctalia/settings.toml"
-    dest: "{{target_home_dir}}/arch-build/roles/setup/configurations/noctalia/files/settings.toml"
-
-- name:
-  become: true
-  become_user: "{{target_user}}"
-  become_method: su
-  copy:
-    src: "{{target_home_dir}}/.local/state/noctalia/state.toml"
-    dest: "{{target_home_dir}}/arch-build/roles/setup/configurations/noctalia/files/state.toml"
+  command: noctalia config export full > "{{target_home_dir}}/arch-build/roles/setup/configurations/noctalia/files/noctalia-config.toml"

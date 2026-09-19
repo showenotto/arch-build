@@ -17,6 +17,7 @@ hl.bind(mainMod .. " + V",          	hl.dsp.exec_cmd("noctalia msg panel-toggle 
 hl.bind(mainMod .. " + N",          	hl.dsp.exec_cmd("noctalia msg panel-toggle control-center notifications"))
 hl.bind("Print",          				hl.dsp.exec_cmd("grim - | satty -f -"))
 hl.bind(mainMod .. " + Print",          hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | satty -f -"))
+hl.bind(mainMod .. " + O",          	hl.dsp.exec_cmd("noctalia msg panel-toggle alchemistaloha/noctalia-overview:overview"))
 
 -- ========== Window Actions ==========
 hl.bind(mainMod .. " + C",          hl.dsp.window.close())                       -- Close Window
