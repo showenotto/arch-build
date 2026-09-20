@@ -1,2 +1,2 @@
 ---
-APPLICATIONS: ["wireshark-qt", "wireshark-cli"]
+APPLICATIONS: ["wireshark-qt", "wireshark-cli", "libreoffice-fresh", "steam", "virtualbox"]

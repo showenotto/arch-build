@@ -71,10 +71,9 @@ hl.bind("ALT + K",                  hl.dsp.focus({ workspace = 3 }))
 hl.bind("ALT + L",                  hl.dsp.focus({ workspace = 4 }))
 
 -- ========== Session Management ==========
-hl.bind("CTRL + ALT + L",           hl.dsp.exec_cmd("hyprlock"))                 -- Lock Screen (or loginctl lock-session)
-hl.bind("CTRL + ALT + END",         hl.dsp.exec_cmd("uwsm stop || hyprctl dispatch exit"))  -- Logout (prefer uwsm if you use it)
-hl.bind("CTRL + ALT + UP",          hl.dsp.exec_cmd("systemctl reboot"))         -- Restart
-hl.bind("CTRL + ALT + DOWN",        hl.dsp.exec_cmd("systemctl poweroff"))       -- Shutdown
+hl.bind("CTRL + ALT + L",         hl.dsp.exec_cmd("uwsm stop || hyprctl dispatch exit"))  -- Logout (prefer uwsm if you use it)
+hl.bind("CTRL + ALT + END",      hl.dsp.exec_cmd("pkill -TERM brave; sleep 3; systemctl poweroff"))         -- Shutdown
+hl.bind("CTRL + ALT + NEXT",      hl.dsp.exec_cmd("pkill -TERM brave; sleep 3; systemctl reboot"))         -- Restart
 
 -- ========== Hyprland Defaults ==========
 
