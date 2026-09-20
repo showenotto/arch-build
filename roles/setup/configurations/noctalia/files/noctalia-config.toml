@@ -74,7 +74,7 @@ order = [ "default" ]
 warning_threshold = 10
 
 [brightness]
-enable_ddcutil = false
+enable_ddcutil = true
 ignore_mmids = []
 minimum_brightness = 0.0
 sync_all_monitors = false

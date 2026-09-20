@@ -17,6 +17,7 @@ PACKAGES:
     "satty",
     "xclip",
     "gparted",
+    "ddcutil",
     "flatpak",
     "ntfs-3g",
     "noctalia",
