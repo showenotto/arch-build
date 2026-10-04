@@ -5,9 +5,8 @@ ui_scale = 1.0
 [audio]
 enable_overdrive = false
 enable_sounds = false
-notification_sound = ""
+sound_theme = "freedesktop"
 sound_volume = 0.5
-volume_change_sound = ""
 
 [backdrop]
 blur_intensity = 0.5
@@ -23,12 +22,14 @@ order = [ "default" ]
     border = "outline"
     border_width = 0.0
     capsule = false
+    capsule_border_width = 1.0
     capsule_fill = "surface_variant"
     capsule_group = []
     capsule_opacity = 1.0
     capsule_padding = 6.0
     capsule_thickness = 0.75999999046325684
     center = [ "clock" ]
+    compositor_blur = true
     concave_edge_corners = true
     contact_shadow = false
     enabled = true
@@ -84,6 +85,12 @@ enabled = false
 event_date_format = "%A %e %B"
 event_time_format = "%H:%M"
 refresh_minutes = 15
+
+    [calendar.reminders]
+    all_day_digest_time = "09:00"
+    default_lead_minutes = 10
+    enabled = true
+    use_event_reminders = true
 
 [control_center]
 hidden_tabs = [ "power", "bluetooth" ]
@@ -244,11 +251,14 @@ sunset = ""
 allow_empty_password = false
 blur_intensity = 0.5
 blurred_desktop = false
+edge_smoothness = 0.30000001192092896
 enabled = true
 fingerprint = true
 lock_before_suspend = true
 monitors = []
 tint_intensity = 0.30000001192092896
+transition = [ "fade", "wipe", "disc", "stripes", "zoom", "honeycomb" ]
+transition_duration = 1500.0
 wallpaper = ""
 
 [lockscreen_widgets]
@@ -318,7 +328,7 @@ widget_order = [ "lockscreen-login-box@HDMI-A-1", "lockscreen-login-box@Virtual-
         show_weather = true
 
 [nightlight]
-enabled = false
+enabled = true
 force = false
 temperature_day = 6500
 temperature_night = 4000
@@ -326,8 +336,11 @@ temperature_night = 4000
 [notification]
 background_opacity = 0.97000002861022949
 border = true
+border_color = "outline"
+border_width = 1.0
 collapse_on_dismiss = true
 enable_daemon = true
+follow_focused_output = false
 history_retention_hours = 0
 keep_dismissed_in_history = true
 layer = "top"
@@ -339,11 +352,16 @@ position = "top_right"
 scale = 1.0
 show_actions = true
 show_app_name = true
+width = 360
 
 [osd]
 background_opacity = 0.97000002861022949
 border = true
+border_color = "outline"
+border_width = 1.0
 enabled = true
+follow_focused_output = false
+hide_delay_ms = 1400
 monitors = []
 offset_x = 20
 offset_y = 8
@@ -424,7 +442,9 @@ password_style = "default"
 polkit_agent = false
 popup_borders = true
 popup_shadows = true
+readline_shortcuts = false
 screen_time_enabled = false
+settings_expand_all_groups = false
 settings_show_advanced = true
 settings_window_translucent = false
 setup_wizard_enabled = true
@@ -432,6 +452,7 @@ shared_gl_context = true
 show_location = true
 telemetry_enabled = false
 time_format = "{:%H:%M}"
+umbriel_overview_type_to_launch_enabled = false
 
     [shell.animation]
     enabled = true
@@ -456,6 +477,9 @@ time_format = "{:%H:%M}"
     sort_by_usage = true
 
         [shell.launcher.dmenu]
+
+        [shell.launcher.panels]
+        ignored = [ "polkit", "setup-wizard", "test", "launcher" ]
 
     [shell.mpris]
     blacklist = []
@@ -497,6 +521,7 @@ time_format = "{:%H:%M}"
     [shell.screenshot]
     annotate = false
     close_on_copy = true
+    close_on_save = true
     confirm_region = false
     copy_to_clipboard = true
     directory = ""
@@ -507,6 +532,7 @@ time_format = "{:%H:%M}"
     remember_last_region = false
     save_to_file = true
     show_cursor = false
+    skip_annotate_on_copy_save = false
 
     [shell.session]
     grid = false
@@ -570,7 +596,13 @@ time_format = "{:%H:%M}"
     direction = "down"
 
     [shell.window_switcher]
-    mru = false
+    current_workspace_only = true
+    mru = true
+    show_all_outputs = true
+    show_app_icon = true
+    show_caption = true
+    show_count = true
+    style = "carousel"
 
 [storage]
 key_file = ""
