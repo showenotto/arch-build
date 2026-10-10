@@ -16,6 +16,7 @@ PACKAGES:
     "slurp",
     "satty",
     "xclip",
+    "okular",
     "gparted",
     "ddcutil",
     "flatpak",
