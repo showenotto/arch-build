@@ -137,6 +137,10 @@ hl.config({
     animations = {
         enabled = true,
     },
+
+	misc = {
+		on_focus_under_fullscreen = 1,  -- the important line
+  	},
 })
 
 -- Default curves and animations, see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Animations/
